@@ -139,8 +139,8 @@ def on_ui_tabs():
 
                 gr.Markdown(value="2. Pick Subfolder and Model Version")
                 with gr.Row():
-                    dl_model_name_txtbox = gr.Textbox(label="Model Name", interactive=False, lines=1, value="")
-                    dl_model_type_txtbox = gr.Textbox(label="Model Type", interactive=False, lines=1, value="")
+                    dl_model_name_txtbox = gr.Textbox(label="Model Name", interactive=True, lines=1, value="")
+                    dl_model_type_txtbox = gr.Dropdown(choices=model_types,label="Model Type", interactive=True, lines=1, value="")
                     dl_subfolder_drop = gr.Dropdown(choices=[], label="Sub-folder", value="", interactive=True, multiselect=False)
                     dl_version_drop = gr.Dropdown(choices=[], label="Model Version", value="", interactive=True, multiselect=False)
                     dl_all_ckb = gr.Checkbox(label="Download All files", value=False, elem_id="ch_dl_all_ckb", elem_classes="ch_vpadding")
@@ -195,7 +195,7 @@ def on_ui_tabs():
 
         # Download Model
         dl_model_info_btn.click(get_model_info_by_url, inputs=dl_model_url_or_id_txtbox, outputs=[dl_model_info, dl_model_name_txtbox, dl_model_type_txtbox, dl_subfolder_drop, dl_version_drop])
-        dl_civitai_model_by_id_btn.click(model_action_civitai.dl_model_by_input, inputs=[dl_model_info, dl_model_type_txtbox, dl_subfolder_drop, dl_version_drop, dl_all_ckb, max_size_preview_ckb, skip_nsfw_preview_ckb], outputs=dl_log_md)
+        dl_civitai_model_by_id_btn.click(model_action_civitai.dl_model_by_input_, inputs=[dl_model_name_txtbox, dl_model_type_txtbox, dl_subfolder_drop, dl_version_drop, dl_all_ckb, max_size_preview_ckb, skip_nsfw_preview_ckb,dl_model_url_or_id_txtbox], outputs=dl_log_md)
 
         # Check models' new version
         check_models_new_version_btn.click(model_action_civitai.check_models_new_version_to_md, inputs=model_types_ckbg, outputs=check_models_new_version_log_md)

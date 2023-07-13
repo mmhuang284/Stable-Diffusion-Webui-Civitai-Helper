@@ -509,3 +509,58 @@ def dl_model_by_input(model_info:dict, model_type:str, subfolder_str:str, versio
     output = "Done. Model downloaded to: " + filepath
     util.printD(output)
     return output
+
+
+def dl_model_by_input_(model_name: str, model_type: str, subfolder_str: str, version_str: str, dl_all_bool: bool,
+                      max_size_preview: bool, skip_nsfw_preview: bool,dl_model_url_or_id_txtbox:str) -> str:
+    output = ""
+    if not dl_model_url_or_id_txtbox:
+        output = "model_url is None"
+        util.printD(output)
+        return output
+    if not model_name:
+        output = "model_name is None"
+        util.printD(output)
+        return output
+
+    if not model_type:
+        output = "model_type is None"
+        util.printD(output)
+        return output
+
+
+    model_root_folder = model.folders[model_type]
+
+    # get subfolder
+    subfolder = ""
+    if subfolder_str == "/" or subfolder_str == "\\":
+        subfolder = ""
+    elif subfolder_str[:1] == "/" or subfolder_str[:1] == "\\":
+        subfolder = subfolder_str[1:]
+    else:
+        subfolder = subfolder_str
+
+    # get model folder for downloading
+    model_folder = os.path.join(model_root_folder, subfolder)
+    if not os.path.isdir(model_folder):
+        output = "Model folder is not a dir: " + model_folder
+        util.printD(output)
+        return output
+
+    # # get version info
+    # ver_info = get_ver_info_by_ver_str(version_str, model_info)
+    # if not ver_info:
+    #     output = "Fail to get version info, check console log for detail"
+    #     util.printD(output)
+    #     return output
+    #
+    # version_id = ver_info["id"]
+
+    url = dl_model_url_or_id_txtbox
+    # download
+    filepath = downloader.dl(url, model_folder, model_name, None)
+
+
+    output = "Done. Model downloaded to: " + filepath
+    util.printD(output)
+    return output

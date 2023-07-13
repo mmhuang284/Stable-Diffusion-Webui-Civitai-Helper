@@ -31,7 +31,7 @@ def dl(url, folder, filename, filepath):
             file_path = os.path.join(folder, filename)
 
     # first request for header
-    rh = requests.get(url, stream=True, verify=False, headers=util.def_headers, proxies=util.proxies)
+    rh = requests.get(url, stream=True, verify=False, headers=util.def_headers)
     # get file size
     total_size = 0
     total_size = int(rh.headers['Content-Length'])
@@ -89,7 +89,7 @@ def dl(url, folder, filename, filepath):
     headers['User-Agent'] = util.def_headers['User-Agent']
 
     # download with header
-    r = requests.get(url, stream=True, verify=False, headers=headers, proxies=util.proxies)
+    r = requests.get(url, stream=True, verify=False, headers=headers)
 
     # write to file
     with open(dl_file_path, "ab") as f:
